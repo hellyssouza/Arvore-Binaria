@@ -1,19 +1,46 @@
 package application;
 
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Main {
+	@SuppressWarnings({ "resource", "unused" })
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
-		No no = null;
-		Arvore arvore = new Arvore(45);
-	
-		arvore.inserir(5);
-		arvore.inserir(4);
-		arvore.inserir(6);
-		arvore.inserir(1);
-		arvore.inserir(2);
-		arvore.inserir(0);
-		
-		no = arvore.remover(5);
-		no = arvore.remover(3);
+		Scanner leitor = new Scanner(System.in);
+		Arvore arvore = null;
+		int sair = 1;
+
+		while (sair != 0) {
+
+			try {
+				Runtime.getRuntime().exec("cls");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			System.out.println("1- inserir elemento na arvore.");
+			System.out.println("2- remover elemento da arvore.");
+			System.out.println("3- imprimir em ordem a arvore.");
+			System.out.println("4- imprimir em pre ordem a arvore.");
+			System.out.println("5- imprimir em pos ordem a arvore.");
+
+			String escolha = leitor.nextLine() != null ? leitor.nextLine() : "";
+
+			switch (escolha.charAt(0)) {
+			case '1':
+				break;
+			case '2':
+				break;
+			case '3':
+				break;
+			case '4':
+				break;
+			case '5':
+				break;
+			case ' ':
+				System.out.println("Informe um opção.");
+				break;
+			}
+		}
 	}
 }

@@ -16,11 +16,11 @@ public class Arvore {
 	}
 
 	private No inserir(No arvore, long valor) {
-		
-		if (arvore == null) { 
+
+		if (arvore == null) {
 			arvore = new No(valor);
 		} else {
-			if (valor < arvore.getValor()) { 
+			if (valor < arvore.getValor()) {
 				if (arvore.getEsquerda() != null) {
 					inserir(arvore.getEsquerda(), valor);
 				} else {
@@ -36,12 +36,12 @@ public class Arvore {
 				}
 			}
 		}
-		
+
 		return arvore;
 	}
 
 	private No remover(No arvore, long valor) {
-		
+
 		if (arvore != null) {
 			if (arvore.getValor() == valor) {
 				arvore = remove_atual(arvore);
@@ -54,28 +54,102 @@ public class Arvore {
 					}
 				}
 			}
+		} else {
+			System.out.println("Arvore não possui elementos.");
 		}
-		
+
 		return arvore;
 	}
-	
+
 	private No remove_atual(No atual) {
-		if(naoPossuiNenhumFilho(atual)) {
+		if (naoPossuiNenhumFilho(atual)) {
 			return null;
 		} else {
-			if(possuiDoisFilhos(atual)) {
+			if (possuiDoisFilhos(atual)) {
 				return encontreMaiorElementoADireitaDoMeuFilhoAEsquerda(atual);
 			} else {
-				if(possuiApenasUmFilhoADireita(atual)) {
+				if (possuiApenasUmFilhoADireita(atual)) {
 					return atual.getDireita();
 				} else {
-					if(possuiApenasUmFilhoAEsquerda(atual)) {
+					if (possuiApenasUmFilhoAEsquerda(atual)) {
 						return atual.getEsquerda();
 					}
 				}
 			}
 		}
 		return atual;
+	}
+
+	public void imprimirPreOrdem() {
+		imprimirPreOrdem(raiz);
+	}
+
+	public void imprimirEmOrdem() {
+		imprimirEmOrdem(raiz);
+	}
+
+	public void imprimirPosOrdem() {
+		imprimirPosOrdem(raiz);
+	}
+
+	public long comprimento(long valor) {
+		return comprimento(raiz, valor);
+	}
+
+	private void imprimirPreOrdem(No arvore) {
+		if (arvore == null) {
+			return;
+		}
+
+		if (arvore != null) {
+			System.out.println(arvore.getValor());
+			imprimirPreOrdem(arvore.getEsquerda());
+			imprimirPreOrdem(arvore.getDireita());
+		}
+	}
+
+	private void imprimirEmOrdem(No arvore) {
+		if (arvore == null) {
+			return;
+		}
+
+		if (arvore != null) {
+			imprimirEmOrdem(arvore.getEsquerda());
+			System.out.println(arvore.getValor());
+			imprimirEmOrdem(arvore.getDireita());
+		}
+	}
+
+	private void imprimirPosOrdem(No arvore) {
+		if (arvore == null) {
+			return;
+		}
+
+		if (arvore != null) {
+			imprimirPosOrdem(arvore.getEsquerda());
+			imprimirPosOrdem(arvore.getDireita());
+			System.out.println(arvore.getValor());
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private long comprimento(No arvore, long valor) {
+		long comprimento = 0;
+		
+		if(arvore != null) {
+			if(arvore.getValor() == valor) {
+				return 0;
+			}
+			if (valor < arvore.getValor()) {
+				comprimento += comprimento(arvore.getEsquerda(), valor);
+			} else {
+				if(valor > arvore.getValor()) {
+					comprimento += comprimento(arvore.getDireita(), valor);
+				}
+			}
+		}
+
+		return 1;
 	}
 
 	private boolean possuiApenasUmFilhoAEsquerda(No atual) {
@@ -97,17 +171,17 @@ public class Arvore {
 	private No encontreMaiorElementoADireitaDoMeuFilhoAEsquerda(No atual) {
 		No auxiliar = atual;
 		No percoredor = atual.getEsquerda();
-		while(percoredor.getDireita() != null) {
+		while (percoredor.getDireita() != null) {
 			auxiliar = percoredor;
 			percoredor = auxiliar.getDireita();
 		}
-		
+
 		percoredor.setDireita(atual.getDireita());
 
-		if(!atual.getEsquerda().equals(percoredor)) {
+		if (!atual.getEsquerda().equals(percoredor)) {
 			percoredor.setEsquerda(atual.getEsquerda());
 		}
-		
+
 		atual = percoredor;
 		percoredor = null;
 		return atual;
