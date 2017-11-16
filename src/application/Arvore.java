@@ -180,8 +180,9 @@ public class Arvore {
 
 		if (!atual.getEsquerda().equals(percoredor)) {
 			percoredor.setEsquerda(atual.getEsquerda());
+			auxiliar.setDireita(null);
 		}
-
+		
 		atual = percoredor;
 		percoredor = null;
 		return atual;
