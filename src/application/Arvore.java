@@ -92,8 +92,8 @@ public class Arvore {
 		imprimirPosOrdem(raiz);
 	}
 
-	public long comprimento(long valor) {
-		return comprimento(raiz, valor);
+	public long altura() {
+		return altura(raiz);
 	}
 
 	private void imprimirPreOrdem(No arvore) {
@@ -132,24 +132,21 @@ public class Arvore {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private long comprimento(No arvore, long valor) {
-		long comprimento = 0;
+	private long altura(No arvore) {
 		
-		if(arvore != null) {
-			if(arvore.getValor() == valor) {
-				return 0;
-			}
-			if (valor < arvore.getValor()) {
-				comprimento += comprimento(arvore.getEsquerda(), valor);
-			} else {
-				if(valor > arvore.getValor()) {
-					comprimento += comprimento(arvore.getDireita(), valor);
-				}
-			}
-		}
+		if (arvore != null) {
+			long alturaDireita, alturaEsquerda;
 
-		return 1;
+			alturaEsquerda = altura(arvore.getEsquerda());
+			alturaDireita = altura(arvore.getDireita());
+
+			if (alturaEsquerda > alturaDireita)
+				return alturaEsquerda + 1;
+			else
+				return alturaDireita + 1;
+		}
+		
+		return 0;
 	}
 
 	private boolean possuiApenasUmFilhoAEsquerda(No atual) {
@@ -182,7 +179,7 @@ public class Arvore {
 			percoredor.setEsquerda(atual.getEsquerda());
 			auxiliar.setDireita(null);
 		}
-		
+
 		atual = percoredor;
 		percoredor = null;
 		return atual;
