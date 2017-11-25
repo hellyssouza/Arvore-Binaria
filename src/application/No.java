@@ -4,29 +4,31 @@ public class No {
 	private No direita;
 	private No esquerda;
 	private long valor;
-	
-	public No(long valor) {this.setValor(valor);}
-	
+
+	public No(long valor) {
+		this.setValor(valor);
+	}
+
 	public No getDireita() {
 		return direita;
 	}
-	
+
 	public void setDireita(No direita) {
 		this.direita = direita;
 	}
-	
+
 	public No getEsquerda() {
 		return esquerda;
 	}
-	
+
 	public void setEsquerda(No esquerda) {
 		this.esquerda = esquerda;
 	}
-	
+
 	public long getValor() {
 		return valor;
 	}
-	
+
 	public void setValor(long valor) {
 		this.valor = valor;
 	}

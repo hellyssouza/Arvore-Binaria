@@ -7,12 +7,12 @@ public class Arvore {
 		raiz = new No(valor);
 	}
 
-	public No inserir(long valor) {
-		return inserir(raiz, valor);
+	public void inserir(long valor) {
+		raiz = inserir(raiz, valor);
 	}
 
-	public No remover(long valor) {
-		return remover(raiz, valor);
+	public void remover(long valor) {
+		raiz = remover(raiz, valor);
 	}
 
 	private No inserir(No arvore, long valor) {
@@ -66,7 +66,7 @@ public class Arvore {
 			return null;
 		} else {
 			if (possuiDoisFilhos(atual)) {
-				return encontreMaiorElementoADireitaDoMeuFilhoAEsquerda(atual);
+				return recupereMaiorADireitaDaSubArvoreAEsquerda(atual);
 			} else {
 				if (possuiApenasUmFilhoADireita(atual)) {
 					return atual.getDireita();
@@ -133,7 +133,7 @@ public class Arvore {
 	}
 
 	private long altura(No arvore) {
-		
+
 		if (arvore != null) {
 			long alturaDireita, alturaEsquerda;
 
@@ -145,7 +145,7 @@ public class Arvore {
 			else
 				return alturaDireita + 1;
 		}
-		
+
 		return 0;
 	}
 
@@ -165,9 +165,10 @@ public class Arvore {
 		return atual.getEsquerda() != null && atual.getDireita() != null;
 	}
 
-	private No encontreMaiorElementoADireitaDoMeuFilhoAEsquerda(No atual) {
-		No auxiliar = atual;
+	private No recupereMaiorADireitaDaSubArvoreAEsquerda(No atual) {
 		No percoredor = atual.getEsquerda();
+		No auxiliar = atual;
+
 		while (percoredor.getDireita() != null) {
 			auxiliar = percoredor;
 			percoredor = auxiliar.getDireita();
@@ -175,13 +176,36 @@ public class Arvore {
 
 		percoredor.setDireita(atual.getDireita());
 
-		if (!atual.getEsquerda().equals(percoredor)) {
-			percoredor.setEsquerda(atual.getEsquerda());
+		if (noEscolhidoEDiferenteDoFilhoAEsquerdaDoNoAtual(percoredor, atual)) {
+			if (noEscolhidoParaTrocaPossuiFilhoAEsquerda(percoredor)) {
+				No ultimoNoAEsquerda = reculpereUltimoNoMaisAEsquerda(percoredor);
+				ultimoNoAEsquerda.setEsquerda(atual.getEsquerda());
+			} else {
+				percoredor.setEsquerda(atual.getEsquerda());
+			}
 			auxiliar.setDireita(null);
 		}
 
 		atual = percoredor;
 		percoredor = null;
 		return atual;
+	}
+
+	private No reculpereUltimoNoMaisAEsquerda(No escolhido) {
+		No percoredor = escolhido.getEsquerda();
+
+		while (percoredor.getEsquerda() != null) {
+			percoredor = percoredor.getEsquerda();
+		}
+
+		return percoredor;
+	}
+
+	private boolean noEscolhidoEDiferenteDoFilhoAEsquerdaDoNoAtual(No escolhido, No atual) {
+		return !atual.getEsquerda().equals(escolhido);
+	}
+
+	private boolean noEscolhidoParaTrocaPossuiFilhoAEsquerda(No escolhido) {
+		return escolhido.getEsquerda() != null;
 	}
 }

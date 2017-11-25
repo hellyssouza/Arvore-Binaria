@@ -6,12 +6,8 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner leitor = new Scanner(System.in);
 		Arvore arvore = null;
-
-		String continuar = "";
-
-		while (!continuar.equals("N")) {
-			continuar = "";
-
+		
+		while (true) {
 			if (arvore == null) {
 				arvore = crieArvore(leitor);
 			}
@@ -53,9 +49,6 @@ public class Main {
 				System.out.println("Informe um opção.");
 				break;
 			}
-
-			System.out.println("Deseja Continuar ? (S/N): ");
-			continuar = leitor.nextLine();
 		}
 	}
 
